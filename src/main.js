@@ -26,6 +26,16 @@ function trackEvent(eventName) {
   }
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;",
+  })[character]);
+}
+
 function wireWhatsAppLinks() {
   document.querySelectorAll("[data-whatsapp-event]").forEach((link) => {
     const eventName = link.dataset.whatsappEvent || "whatsapp_click";
@@ -39,15 +49,15 @@ function renderUnits() {
   target.innerHTML = UNIT_TYPES.map((unit) => `
     <article class="unit-card">
       <div class="unit-copy">
-        <p class="eyebrow">${unit.title}</p>
-        <h3>${unit.subtitle}</h3>
-        <p class="unit-price">${unit.price}</p>
-        <p class="muted">${unit.area}</p>
-        <ul>${unit.bullets.map((item) => `<li>${item}</li>`).join("")}</ul>
+        <p class="eyebrow">${escapeHtml(unit.title)}</p>
+        <h3>${escapeHtml(unit.subtitle)}</h3>
+        <p class="unit-price">${escapeHtml(unit.price)}</p>
+        <p class="muted">${escapeHtml(unit.area)}</p>
+        <ul>${unit.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
         <a class="button button-dark" data-whatsapp-event="whatsapp_units_click" href="#">Consultar unidades disponíveis</a>
       </div>
-      <button class="plan-preview" type="button" data-lightbox-src="${unit.planImage}" data-lightbox-alt="Planta ${unit.title}">
-        <img src="${unit.planImage}" alt="Planta oficial ${unit.title} MAC Pinheiros" loading="lazy" width="1600" height="1132">
+      <button class="plan-preview" type="button" data-lightbox-src="${escapeHtml(unit.planImage)}" data-lightbox-alt="Planta ${escapeHtml(unit.title)}">
+        <img src="${escapeHtml(unit.planImage)}" alt="Planta oficial ${escapeHtml(unit.title)} MAC Pinheiros" loading="lazy" width="1600" height="1132">
         <span>Ampliar planta</span>
       </button>
     </article>
@@ -57,9 +67,9 @@ function renderUnits() {
 function renderGallery() {
   const target = document.querySelector("[data-gallery]");
   target.innerHTML = GALLERY.map(([label, src], index) => `
-    <button class="gallery-item" type="button" data-lightbox-src="${src}" data-lightbox-alt="${label}">
-      <img src="${src}" alt="Perspectiva artística - ${label} do MAC Pinheiros" loading="${index < 2 ? "eager" : "lazy"}">
-      <span>${label}</span>
+    <button class="gallery-item" type="button" data-lightbox-src="${escapeHtml(src)}" data-lightbox-alt="${escapeHtml(label)}">
+      <img src="${escapeHtml(src)}" alt="Perspectiva artística - ${escapeHtml(label)} do MAC Pinheiros" loading="${index < 2 ? "eager" : "lazy"}">
+      <span>${escapeHtml(label)}</span>
     </button>
   `).join("");
 }

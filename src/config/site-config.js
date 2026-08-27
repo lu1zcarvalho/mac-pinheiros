@@ -1,4 +1,4 @@
-export const WHATSAPP_NUMBER = "INSERIR_NUMERO_AQUI";
+export const WHATSAPP_NUMBER = "5511960438589";
 
 export const TRACKING = {
   GOOGLE_TAG_MANAGER_ID: "",

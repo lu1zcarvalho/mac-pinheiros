@@ -23,6 +23,11 @@ function trackEvent(eventName) {
   window.dataLayer.push({ event: eventName, source: "mac_pinheiros_landing" });
   if (typeof window.gtag === "function") {
     window.gtag("event", eventName, { event_category: "whatsapp", event_label: "MAC Pinheiros" });
+    window.gtag("event", "conversion", {
+      send_to: "AW-18412748479/ib_CCI_T9OgcEL_98MtE",
+      value: 1.0,
+      currency: "BRL",
+    });
   }
 }
 
